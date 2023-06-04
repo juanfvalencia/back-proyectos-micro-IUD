@@ -4,7 +4,6 @@ const TipoProyecto = require('../models/tipoProyecto')
 const Cliente = require('../models/cliente')
 const Universidad = require('../models/universidad')
 const Etapa = require('../models/etapa')
-// TODO: COLOCAR EL RESTO DE MODELOS
 
 // crear
 const createProyecto = async (req = request, 
@@ -58,6 +57,7 @@ const createProyecto = async (req = request,
 const getProyectos = async (req = request, 
     res = response) => {
         try{
+            console.log('petición');
             const proyectosDB = await Proyecto.find()
                 .populate({
                     path: 'tipoProyecto'
@@ -71,32 +71,14 @@ const getProyectos = async (req = request,
                 .populate({
                     path: 'universidad'
                 })
-                // TODO: HACER POPULATE PARA EL RESTO DE MODELOS
             return res.json(proyectosDB)
+            
         }catch(e){
             return res.status(500).json({
                 msg: 'Error general ' + e
             })
         }
 }
-
-// TODO
-// actualizar inventario
-/*const updateProyectoByID = async (req = request, 
-    res = response) => {
-
-    try{
-        const { id } = req.params
-        const data = req.body
-        const inventario  = await Inventario.findByIdAndUpdate(id, data, {new: true})
-        return res.status(201).json(inventario)
-    }catch(e){
-        console.log(e)
-        return res.status(500).json({msj: 'Error'}) 
-    }
-
-}*/
-
 
 module.exports = { 
     createProyecto, 
